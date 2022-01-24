@@ -145,6 +145,22 @@ storiesOf("Appointment", module)
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
+  .add("Appointment Empty", () => (
+    <>
+      <Appointment id={1} time={"4pm"} />
+      <Appointment time={"5pm"} />
+    </>
+  ))
+  .add("Appointment Booked", () => (
+    <>
+      <Appointment
+        id={1}
+        time="4pm"
+        interview={{ student: "Lydia Miller-Jones", interviewer }}
+      />
+      <Appointment time="5pm" />
+    </>
+  ))
   .add("Appointment with Time", () => (
     <Appointment
       time={"12pm"}
