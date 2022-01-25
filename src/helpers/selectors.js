@@ -8,4 +8,16 @@ const getAppointmentsForDay = (state, day) => {
     dayData.appointments.map(id => state.appointments[id]) : [];
 };
 
-module.exports = { getAppointmentsForDay };
+const getInterview = (state, interview) => {
+  if (!Object.keys(state.appointments).length || !interview || !interview.interviewer) return null;
+
+  const interviewerData = state.interviewers[interview.interviewer];
+  if (!interviewerData) return null;
+
+  return {
+    ...interview,
+    interviewer: interviewerData
+  };
+};
+
+export { getAppointmentsForDay, getInterview };
