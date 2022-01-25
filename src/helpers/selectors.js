@@ -4,8 +4,7 @@ const getAppointmentsForDay = (state, day) => {
   const dayData = state.days.find(d => d.name === day);
   if (!dayData) return [];
 
-  return dayData.appointments.length ?
-    dayData.appointments.map(id => state.appointments[id]) : [];
+  return dayData.appointments.map(id => state.appointments[id]);
 };
 
 const getInterview = (state, interview) => {
@@ -20,4 +19,13 @@ const getInterview = (state, interview) => {
   };
 };
 
-export { getAppointmentsForDay, getInterview };
+const getInterviewersForDay = (state, day) => {
+  if (!state.days.length) return [];
+
+  const dayData = state.days.find(d => d.name === day);
+  if (!dayData) return [];
+
+  return dayData.interviewers.map(id => state.interviewers[id]);
+};
+
+export { getAppointmentsForDay, getInterview, getInterviewersForDay };
