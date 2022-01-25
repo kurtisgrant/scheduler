@@ -5,13 +5,24 @@ import Header from 'components/Appointment/Header';
 import Show from 'components/Appointment/Show';
 import Empty from 'components/Appointment/Empty';
 import Form from 'components/Appointment/Form';
+import Status from 'components/Appointment/Status';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const SAVING = "SAVING";
 
-function Appointment({ time, interview, dailyInterviewers }) {
+function Appointment({ id, time, interview, dailyInterviewers, bookInterview }) {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
+
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    transition(SAVING);
+    bookInterview(id, interview).then(() => transition(SHOW));
+  }
 
   return (
     <article className="appointment">
@@ -24,7 +35,13 @@ function Appointment({ time, interview, dailyInterviewers }) {
         // onDelete={() => transition(CONFIRM)}
         />
       }
-      {mode === CREATE && <Form interviewers={dailyInterviewers} onCancel={() => back()} />}
+      {mode === CREATE &&
+        <Form
+          interviewers={dailyInterviewers}
+          onCancel={() => back()}
+          onSave={save}
+        />}
+      {mode === SAVING && <Status message="Loading" />}
     </article>
   );
 }
