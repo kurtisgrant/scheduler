@@ -19,11 +19,10 @@ const CONFIRM = "CONFIRM";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
-function Appointment({ id, time, interview, dailyInterviewers, bookInterview, cancelInterview }) {
+function Appointment({ id, time, interview, interviewers, bookInterview, cancelInterview }) {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   const save = (name, interviewer) => {
-    console.log('saving');
     const interview = {
       student: name,
       interviewer
@@ -63,13 +62,13 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview, ca
       }
       {mode === CREATE &&
         <Form
-          interviewers={dailyInterviewers}
+          interviewers={interviewers}
           onCancel={() => back()}
           onSave={save}
         />}
       {mode === EDIT &&
         <Form
-          interviewers={dailyInterviewers}
+          interviewers={interviewers}
           interviewer={interview.interviewer.id}
           student={interview.student}
           onCancel={() => back()}
