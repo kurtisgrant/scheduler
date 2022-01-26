@@ -4,7 +4,6 @@ import InterviewerList from 'components/InterviewerList';
 
 function Form({ student: inputStudent, interviewer: inputInterviewer, interviewers, onSave, onCancel }) {
   const isEdit = (inputStudent || inputInterviewer) ? true : false;
-  console.log(isEdit);
   const [student, setStudent] = useState(inputStudent || '');
   const [interviewer, setInterviewer] = useState(inputInterviewer || null);
 
