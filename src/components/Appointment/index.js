@@ -25,7 +25,12 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview, ca
       interviewer
     };
     transition(SAVING);
-    bookInterview(id, interview).then(() => transition(SHOW));
+    bookInterview(id, interview).then(() => transition(SHOW))
+      .catch(err => {
+        console.log(err.response.status);
+        console.log(err.response.headers);
+        console.log(err.response.data);
+      });
   };
 
   const cancel = () => {
@@ -34,7 +39,12 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview, ca
 
   const confirmCancel = () => {
     transition(DELETING);
-    cancelInterview(id).then(() => transition(EMPTY));
+    cancelInterview(id).then(() => transition(EMPTY))
+    .catch(err => {
+      console.log(err.response.status);
+      console.log(err.response.headers);
+      console.log(err.response.data);
+    });
   };
 
   return (

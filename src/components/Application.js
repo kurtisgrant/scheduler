@@ -48,12 +48,7 @@ export default function Application(props) {
 
     setState({ ...state, appointments });
 
-    return axios.put(`/api/appointments/${apptId}`, { interview })
-      .catch(err => {
-        console.log(err.response.status);
-        console.log(err.response.headers);
-        console.log(err.response.data);
-      });
+    return axios.put(`/api/appointments/${apptId}`, { interview });
   };
 
   const cancelInterview = (apptId) => {
@@ -64,12 +59,7 @@ export default function Application(props) {
         [apptId]: { ...state.appointments[apptId], interview: null }
       }
     });
-    return axios.delete(`/api/appointments/${apptId}`)
-      .catch(err => {
-        console.log(err.response.status);
-        console.log(err.response.headers);
-        console.log(err.response.data);
-      });
+    return axios.delete(`/api/appointments/${apptId}`);
   };
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
