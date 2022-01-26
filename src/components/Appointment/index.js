@@ -7,6 +7,7 @@ import Empty from 'components/Appointment/Empty';
 import Form from 'components/Appointment/Form';
 import Status from 'components/Appointment/Status';
 import Confirm from 'components/Appointment/Confirm';
+import Error from 'components/Appointment/Error';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -15,36 +16,38 @@ const EDIT = "EDIT";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 function Appointment({ id, time, interview, dailyInterviewers, bookInterview, cancelInterview }) {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   const save = (name, interviewer) => {
+    console.log('saving');
     const interview = {
       student: name,
       interviewer
     };
     transition(SAVING);
-    bookInterview(id, interview).then(() => transition(SHOW))
+    bookInterview(id, interview)
+      .then(() => transition(SHOW))
       .catch(err => {
-        console.log(err.response.status);
-        console.log(err.response.headers);
-        console.log(err.response.data);
+        console.log('Save request error: ', err.response);
+        transition(ERROR_SAVE, true);
       });
   };
 
-  const cancel = () => {
+  const cancelAppt = () => {
     transition(CONFIRM);
   };
 
-  const confirmCancel = () => {
-    transition(DELETING);
+  const confirmCancelAppt = () => {
+    transition(DELETING, true);
     cancelInterview(id).then(() => transition(EMPTY))
-    .catch(err => {
-      console.log(err.response.status);
-      console.log(err.response.headers);
-      console.log(err.response.data);
-    });
+      .catch(err => {
+        console.log('Delete request error: ', err.response);
+        transition(ERROR_DELETE, true);
+      });
   };
 
   return (
@@ -55,7 +58,7 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview, ca
         <Show
           {...interview}
           onEdit={() => transition(EDIT)}
-          onDelete={cancel}
+          onDelete={cancelAppt}
         />
       }
       {mode === CREATE &&
@@ -74,11 +77,23 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview, ca
         />
       }
       {mode === SAVING && <Status message="Saving" />}
+      {mode === ERROR_SAVE &&
+        <Error
+          message="Appointment could not be saved."
+          onClose={() => back()}
+        />
+      }
       {mode === DELETING && <Status message="Deleting" />}
+      {mode === ERROR_DELETE &&
+        <Error
+          message="Appointment could not be deleted."
+          onClose={() => back()}
+        />
+      }
       {mode === CONFIRM &&
         <Confirm
           message="Are you sure you want to delete this appointment?"
-          onConfirm={confirmCancel}
+          onConfirm={confirmCancelAppt}
           onCancel={() => back()}
         />}
     </article>
