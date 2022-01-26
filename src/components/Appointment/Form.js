@@ -3,6 +3,8 @@ import Button from 'components/Button';
 import InterviewerList from 'components/InterviewerList';
 
 function Form({ student: inputStudent, interviewer: inputInterviewer, interviewers, onSave, onCancel }) {
+  const isEdit = (inputStudent || inputInterviewer) ? true : false;
+  console.log(isEdit);
   const [student, setStudent] = useState(inputStudent || '');
   const [interviewer, setInterviewer] = useState(inputInterviewer || null);
 
@@ -38,7 +40,7 @@ function Form({ student: inputStudent, interviewer: inputInterviewer, interviewe
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={() => cancel()}>Cancel</Button>
-          <Button confirm onClick={() => onSave(student, interviewer)}>Save</Button>
+          <Button confirm onClick={() => onSave(student, interviewer, isEdit)}>Save</Button>
         </section>
       </section>
     </main>

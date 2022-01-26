@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import getNewDaysSpotsAdjusted from '../helpers/getNewDaysSpotsAdjusted';
+
 import axios from 'axios';
 
 export default () => {
@@ -28,7 +30,7 @@ export default () => {
     });
   }, []);
 
-  const bookInterview = (apptId, interview) => {
+  const bookInterview = (apptId, interview, isEdit) => {
     const appointment = {
       ...state.appointments[apptId],
       interview: { ...interview }
@@ -37,10 +39,11 @@ export default () => {
       ...state.appointments,
       [apptId]: appointment
     };
+    const days = isEdit ? state.days : getNewDaysSpotsAdjusted(state, -1);
 
     return axios.put(`/api/appointments/${apptId}`, { interview })
       .then(res => {
-        setState({ ...state, appointments });
+        setState({ ...state, appointments, days });
         return res;
       });
   };
@@ -53,7 +56,8 @@ export default () => {
           appointments: {
             ...state.appointments,
             [apptId]: { ...state.appointments[apptId], interview: null }
-          }
+          },
+          days: getNewDaysSpotsAdjusted(state, 1)
         });
       });
   };

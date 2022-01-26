@@ -22,13 +22,13 @@ const ERROR_DELETE = "ERROR_DELETE";
 function Appointment({ id, time, interview, interviewers, bookInterview, cancelInterview }) {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
-  const save = (name, interviewer) => {
+  const save = (name, interviewer, isEdit) => {
     const interview = {
       student: name,
       interviewer
     };
     transition(SAVING);
-    bookInterview(id, interview)
+    bookInterview(id, interview, isEdit)
       .then(() => transition(SHOW))
       .catch(err => {
         console.log('Save request error: ', err.response);
