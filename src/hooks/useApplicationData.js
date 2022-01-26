@@ -40,7 +40,21 @@ export default () => {
 
     return axios.put(`/api/appointments/${apptId}`, { interview })
       .then(res => {
-        setState({ ...state, appointments });
+
+        const newDays = state.days.map(day => {
+          if (day.name !== state.day) return day;
+
+          const availableAppts = day.appointments.filter(id => {
+            return id === apptId ? !interview : !state.appointments[id].interview;
+          });
+
+          return {
+            ...day,
+            spots: availableAppts.length
+          };
+        });
+
+        setState({ ...state, appointments, days: newDays });
         return res;
       });
   };
@@ -48,12 +62,27 @@ export default () => {
   const cancelInterview = (apptId) => {
     return axios.delete(`/api/appointments/${apptId}`)
       .then(res => {
+
+        const newDays = state.days.map(day => {
+          if (day.name !== state.day) return day;
+
+          const availableAppts = day.appointments.filter(id => {
+            return id === apptId ? true : !state.appointments[id].interview;
+          });
+
+          return {
+            ...day,
+            spots: availableAppts.length
+          };
+        });
+
         setState({
           ...state,
           appointments: {
             ...state.appointments,
             [apptId]: { ...state.appointments[apptId], interview: null }
-          }
+          },
+          days: newDays
         });
       });
   };
