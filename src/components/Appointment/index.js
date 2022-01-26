@@ -6,23 +6,35 @@ import Show from 'components/Appointment/Show';
 import Empty from 'components/Appointment/Empty';
 import Form from 'components/Appointment/Form';
 import Status from 'components/Appointment/Status';
+import Confirm from 'components/Appointment/Confirm';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
 
-function Appointment({ id, time, interview, dailyInterviewers, bookInterview }) {
+function Appointment({ id, time, interview, dailyInterviewers, bookInterview, cancelInterview }) {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
-  function save(name, interviewer) {
+  const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer
     };
     transition(SAVING);
     bookInterview(id, interview).then(() => transition(SHOW));
-  }
+  };
+
+  const cancel = () => {
+    transition(CONFIRM);
+  };
+
+  const confirmCancel = () => {
+    transition(DELETING);
+    cancelInterview(id).then(() => transition(EMPTY));
+  };
 
   return (
     <article className="appointment">
@@ -31,8 +43,8 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview }) 
       {mode === SHOW &&
         <Show
           {...interview}
-        // onEdit={() => transition(EDIT)}
-        // onDelete={() => transition(CONFIRM)}
+          // onEdit={() => transition(EDIT)}
+          onDelete={cancel}
         />
       }
       {mode === CREATE &&
@@ -41,7 +53,14 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview }) 
           onCancel={() => back()}
           onSave={save}
         />}
-      {mode === SAVING && <Status message="Loading" />}
+      {mode === SAVING && <Status message="Saving" />}
+      {mode === DELETING && <Status message="Deleting" />}
+      {mode === CONFIRM &&
+        <Confirm
+          message="Are you sure you want to delete this appointment?"
+          onConfirm={confirmCancel}
+          onCancel={() => back()}
+        />}
     </article>
   );
 }
