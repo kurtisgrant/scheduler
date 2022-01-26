@@ -11,6 +11,7 @@ import Confirm from 'components/Appointment/Confirm';
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const EDIT = "EDIT";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
@@ -43,7 +44,7 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview, ca
       {mode === SHOW &&
         <Show
           {...interview}
-          // onEdit={() => transition(EDIT)}
+          onEdit={() => transition(EDIT)}
           onDelete={cancel}
         />
       }
@@ -53,6 +54,15 @@ function Appointment({ id, time, interview, dailyInterviewers, bookInterview, ca
           onCancel={() => back()}
           onSave={save}
         />}
+      {mode === EDIT &&
+        <Form
+          interviewers={dailyInterviewers}
+          interviewer={interview.interviewer.id}
+          student={interview.student}
+          onCancel={() => back()}
+          onSave={save}
+        />
+      }
       {mode === SAVING && <Status message="Saving" />}
       {mode === DELETING && <Status message="Deleting" />}
       {mode === CONFIRM &&
