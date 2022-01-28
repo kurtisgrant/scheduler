@@ -17,12 +17,14 @@ function Show({ student, interviewer, onEdit, onDelete }) {
             src="images/edit.png"
             alt="Edit"
             onClick={onEdit}
+            data-testid="edit-appointment"
           />
           <img
             className="appointment__actions-button"
             src="images/trash.png"
             alt="Delete"
             onClick={onDelete}
+            data-testid="delete-appointment"
           />
         </section>
       </section>
