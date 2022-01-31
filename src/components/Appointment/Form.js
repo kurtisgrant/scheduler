@@ -10,6 +10,7 @@ function Form({ student: inputStudent, interviewer: inputInterviewer, interviewe
   const reset = () => {
     setStudent('');
     setInterviewer(null);
+    setError('');
   };
 
   const cancel = () => {
