@@ -5,11 +5,11 @@ import Button from 'components/Button';
 import InterviewerList from 'components/InterviewerList';
 
 function Form({ student: inputStudent, interviewer: inputInterviewer, interviewers, onSave, onCancel }) {
-  
+
   const [student, setStudent] = useState(inputStudent || '');
-  
+
   const [interviewer, setInterviewer] = useState(inputInterviewer || null);
-  
+
   const [error, setError] = useState("");
 
   const reset = () => {
@@ -26,6 +26,10 @@ function Form({ student: inputStudent, interviewer: inputInterviewer, interviewe
   const validate = () => {
     if (student === "") {
       setError("Student name cannot be blank");
+      return;
+    }
+    if (interviewer === null) {
+      setError("Interviewer cannot be blank");
       return;
     }
     setError("");
