@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Button from 'components/Button';
 
 function Confirm({ message, onCancel, onConfirm }) {
@@ -7,14 +8,13 @@ function Confirm({ message, onCancel, onConfirm }) {
       <h1 className="text--semi-bold">{message}</h1>
       <section className="appointment__actions">
         <Button onClick={onCancel} danger>Cancel</Button>
-        <Button 
-        onClick={onConfirm} 
-        danger
-        data-testid="confirm-action"
+        <Button
+          onClick={onConfirm}
+          danger
+          testid="confirm-action"
         >Confirm</Button>
       </section>
     </main>
-
   );
 }
 

@@ -19,7 +19,15 @@ const CONFIRM = "CONFIRM";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
-function Appointment({ id, time, interview, interviewers, bookInterview, cancelInterview }) {
+function Appointment({
+  id,
+  time,
+  interview,
+  interviewers,
+  bookInterview,
+  cancelInterview
+}) {
+
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   const save = (name, interviewer) => {

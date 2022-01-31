@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+
 import Button from 'components/Button';
+
 import InterviewerList from 'components/InterviewerList';
 
 function Form({ student: inputStudent, interviewer: inputInterviewer, interviewers, onSave, onCancel }) {
+  
   const [student, setStudent] = useState(inputStudent || '');
+  
   const [interviewer, setInterviewer] = useState(inputInterviewer || null);
+  
   const [error, setError] = useState("");
 
   const reset = () => {
@@ -23,8 +28,7 @@ function Form({ student: inputStudent, interviewer: inputInterviewer, interviewe
       setError("Student name cannot be blank");
       return;
     }
-    setError("")
-
+    setError("");
     onSave(student, interviewer);
   };
 
@@ -52,7 +56,11 @@ function Form({ student: inputStudent, interviewer: inputInterviewer, interviewe
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={() => cancel()}>Cancel</Button>
-          <Button confirm onClick={() => validate()} data-testid="save-appointment">Save</Button>
+          <Button
+            confirm
+            onClick={() => validate()}
+            testid="save-appointment"
+          >Save</Button>
         </section>
       </section>
     </main>

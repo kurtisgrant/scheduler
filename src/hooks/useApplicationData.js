@@ -47,7 +47,7 @@ export default () => {
           const availableAppts = day.appointments.filter(id => {
             return id === apptId ? !interview : !state.appointments[id].interview;
           });
-          return {...day, spots: availableAppts.length};
+          return { ...day, spots: availableAppts.length };
         });
 
         setState({ ...state, appointments, days: newDays });
@@ -65,7 +65,7 @@ export default () => {
           const availableAppts = day.appointments.filter(id => {
             return id === apptId ? true : !state.appointments[id].interview;
           });
-          return {...day, spots: availableAppts.length};
+          return { ...day, spots: availableAppts.length };
         });
 
         setState({

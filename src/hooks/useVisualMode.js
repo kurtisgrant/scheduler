@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 export default (initMode) => {
+
   const [mode, setMode] = useState(initMode);
+
   const [history, setHistory] = useState([initMode]);
 
   const transition = (newMode, replace = false) => {
@@ -13,7 +15,6 @@ export default (initMode) => {
     } else {
       setHistory(prev => [...prev, newMode]);
     }
-
     setMode(newMode);
   };
 
