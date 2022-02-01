@@ -4,14 +4,11 @@ The Interview Scheduler is a simple application which allows you to create, edit
 
 The project is built with React on the front-end, Node & Express on the back-end and utilizes the testing libraries Storybook, Cypress and Jest. 
 
-## Final Product
-| |
-| ------ |
-| ![](https://media.giphy.com/media/9CC9OhhHHSImzXILxD/giphy.gif) |
+## Project Demo
+![](https://media.giphy.com/media/9CC9OhhHHSImzXILxD/giphy.gif)
 
 ## Setup
 ---
-
 
 ## Install dependencies
 
